@@ -10,7 +10,7 @@ var rocketY = 200, changeY=0, score=0;
 var gameTimer = setInterval(mainLoop, 20); 
 function mainLoop(){
   moveMeteors();
-  // move rocket
+  moveRocket();
 }
 
 function moveMeteors(){
@@ -24,4 +24,15 @@ function moveMeteors(){
     }
     
   }
+}
+
+// function that moves the rocket up and down and add the score
+function moveRocket(){
+  ctx.drawImage(rocket,0,rocketY,80,80);
+  rocketY += changeY;
+  score += 1;
+  ctx.fillStyle = "yellow";
+  ctx.font = "30px Arial";
+  ctx.fillText("Score: " +score,10,30);
+  if((rocketY<0)|| (rocketY>400)){changeY = 0;}
 }
