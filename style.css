@@ -1,0 +1,7 @@
+/* style the background */
+div{ 
+  width: 640px;
+  height: 480px;
+  background:url(./Assets/stars.png);
+  img{display: block;}
+}
