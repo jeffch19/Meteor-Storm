@@ -8,6 +8,8 @@ var speed = [-1, -2, -0.5, -1.2, -1.8];
 var rocketY = 200, changeY=0, score=0;
 
 var gameTimer = setInterval(mainLoop, 20); 
+var highScore = 0, loc=localStorage.getItem('highScore');
+if(loc>0) highScore = loc;
 function mainLoop(){
   moveMeteors();
   moveRocket();
@@ -18,7 +20,7 @@ function moveMeteors(){
   for (var n = 0; n < 5; n++) {
     ctx.drawImage(meteor,x[n],y[n],80,80);
     x[n] += speed[n];
-    // check for hits (n)
+    checkForHits(n);
     if(x[n]<-80) {
       x[n] = 640; y[n] = math.random() * 400;
     }
@@ -35,4 +37,25 @@ function moveRocket(){
   ctx.font = "30px Arial";
   ctx.fillText("Score: " +score,10,30);
   if((rocketY<0)|| (rocketY>400)){changeY = 0;}
+  ctx.fillText("Score: " +score,10,30);
+ctx.fillText("High Score: "+highScore,400,30);
+}
+
+
+// make rocket move up and down
+document.onkeydown = keyPressed;
+function keyPressed(e){
+  var k=e.keyCode;
+  if(k==38) {changeY=-3;}
+  if(k==40) {changeY=3;}
+}
+
+function checkForHits(n) {
+  if (Math.abs(x[n] < 50) && (Math.abs(rocketY-y[n])<50)){
+    clearInterval(gameTimer);
+    ctx.font="80px Arial";
+    ctx.fillText("Game Over!", 100, 250);
+    localStorage.setItem('highScore', score);
+  }
+  
 }
